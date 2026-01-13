@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35919.96 d17.13
+VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Harmonogram_MO", "Harmonogram_MO\Harmonogram_MO.csproj", "{65763A90-8458-4F39-B385-00A4C5240282}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testy_Backendu", "Testy_Backendu\Testy_Backendu.csproj", "{671903BF-B064-4DCE-913D-8D5DBBB4B4C5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{65763A90-8458-4F39-B385-00A4C5240282}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65763A90-8458-4F39-B385-00A4C5240282}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65763A90-8458-4F39-B385-00A4C5240282}.Release|Any CPU.Build.0 = Release|Any CPU
+		{671903BF-B064-4DCE-913D-8D5DBBB4B4C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{671903BF-B064-4DCE-913D-8D5DBBB4B4C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{671903BF-B064-4DCE-913D-8D5DBBB4B4C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{671903BF-B064-4DCE-913D-8D5DBBB4B4C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,8 @@
+C:\Users\bbest\Documents\projekt-MO\MO\Testy_Backendu\bin\Debug\Testy_Backendu.exe.config
+C:\Users\bbest\Documents\projekt-MO\MO\Testy_Backendu\bin\Debug\Testy_Backendu.exe
+C:\Users\bbest\Documents\projekt-MO\MO\Testy_Backendu\bin\Debug\Testy_Backendu.pdb
+C:\Users\bbest\Documents\projekt-MO\MO\Testy_Backendu\obj\Debug\Testy_Backendu.csproj.AssemblyReference.cache
+C:\Users\bbest\Documents\projekt-MO\MO\Testy_Backendu\obj\Debug\Testy_Backendu.csproj.CoreCompileInputs.cache
+C:\Users\bbest\Documents\projekt-MO\MO\Testy_Backendu\obj\Debug\Testy_Backendu.exe
+C:\Users\bbest\Documents\projekt-MO\MO\Testy_Backendu\obj\Debug\Testy_Backendu.pdb
+C:\Users\bbest\Documents\projekt-MO\MO\Testy_Backendu\obj\Debug\Testy_Backendu.exe.config

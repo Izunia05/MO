@@ -4,17 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Harmonogram_MO
+namespace Testy_Backendu
 {
-    internal class ProgramowanieDynamiczne
+    internal class PD_algo
     {
-        //dodanie zadania, z id, czasem wykonania, deadlinem i karą za jednostkę opóźnienia.
         public class Zadanie
         {
             public int Id { get; set; }
-            public int Czas { get; set; }       
-            public int Termin { get; set; }     
-            public int Kara { get; set; }       
+            public int Czas { get; set; }
+            public int Termin { get; set; }
+            public int Kara { get; set; }
         }
 
         public class PDalgo
@@ -65,4 +64,5 @@ namespace Harmonogram_MO
 
 
     }
+
 }

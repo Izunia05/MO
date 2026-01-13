@@ -1,3 +1,5 @@
+using static Harmonogram_MO.ProgramowanieDynamiczne;
+
 namespace Harmonogram_MO
 {
     internal static class Program
@@ -8,10 +10,19 @@ namespace Harmonogram_MO
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
+            
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
+            var zadania = new List<Zadanie>
+{
+            new Zadanie{ Id=1, Czas=3, Termin=4, Kara=10 },
+            new Zadanie{ Id=2, Czas=2, Termin=3, Kara=5 },
+            new Zadanie{ Id=3, Czas=4, Termin=6, Kara=8 }
+};
+
+            int wynik = ProgramowanieDynamiczne.PDalgo.Rozwiaz(zadania);
+            Console.WriteLine("Minimalna kara: " + wynik);
+
         }
     }
 }
