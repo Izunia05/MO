@@ -63,35 +63,7 @@ namespace Harmonogram_MO
             lblWynikKoszt.ForeColor = Color.Black;
         }
 
-        private void btnObliczprawidlowy_Click(object sender, EventArgs e)
-        {
-            if (_listaZadan.Count == 0)
-            {
-                MessageBox.Show("Lista zadań jest pusta! Dodaj coś najpierw.", "Brak danych", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            try
-            {
-                
-                var wynik = PD_algo.Rozwiaz(_listaZadan);
-
-                // Wyświetlanie kosztu
-                lblWynikKoszt.Text = $"Minimalny Koszt Kar: {wynik.koszt} PLN";
-                // Zmieniamy kolor: Zielony = Super (0 kary), Czerwony = Płacimy
-                if (wynik.koszt == 0)
-                    lblWynikKoszt.ForeColor = Color.Green;
-                else
-                    lblWynikKoszt.ForeColor = Color.Red;
-
-                // Wizualizacja klocków w FlowLayoutPanel
-                WizualizujWynik(wynik.kolejnosc);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Wystąpił błąd podczas obliczeń:\n{ex.Message}", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+     
         private void WizualizujWynik(List<int> kolejnoscId)
         {
             // Najpierw czyścimy stare wyniki
@@ -130,6 +102,70 @@ namespace Harmonogram_MO
 
                     flpWynik.Controls.Add(strzalka);
                 }
+            }
+        }
+        private void btnAlgorytmDP_Click(object sender, EventArgs e)
+        {
+            UruchomObliczenia("DP");
+        }
+
+        private void btnAlgorytmBnB_Click(object sender, EventArgs e)
+        {
+            UruchomObliczenia("BnB");
+        }
+
+        private void btnAlgorytmHeurystyka_Click(object sender, EventArgs e)
+        {
+            UruchomObliczenia("HEURYSTYKA");
+        }
+
+        private void UruchomObliczenia(string typAlgorytmu)
+        {
+            // 1. Sprawdzenie czy są zadania
+            if (_listaZadan.Count == 0)
+            {
+                MessageBox.Show("Dodaj najpierw zadania!", "Pusto", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 2. Informacja dla użytkownika, że liczymy
+            lblWynikKoszt.Text = "Obliczam...";
+            lblWynikKoszt.ForeColor = Color.Blue;
+            Application.DoEvents(); // Odświeża okno, żeby napis się pojawił
+
+            try
+            {
+                // Zmienna na wynik
+                (int koszt, List<int> kolejnosc) wynik = (0, new List<int>());
+
+                // 3. Wybór algorytmu (Switch)
+                switch (typAlgorytmu)
+                {
+                    case "DP":
+                        wynik = PD_algo.Rozwiaz(_listaZadan);
+                        break;
+
+                    case "BnB":
+                        wynik = BnB.Rozwiaz(_listaZadan);
+                        break;
+
+                    case "HEURYSTYKA":
+                        wynik = Heurystyka.Rozwiaz(_listaZadan);
+                        break;
+                }
+
+                // 4. Wyświetlenie wyniku (To samo co wcześniej, ale teraz uniwersalne)
+                lblWynikKoszt.Text = $"Algorytm: {typAlgorytmu}\nKoszt: {wynik.koszt} PLN";
+
+                if (wynik.koszt == 0) lblWynikKoszt.ForeColor = Color.Green;
+                else lblWynikKoszt.ForeColor = Color.Red;
+
+                WizualizujWynik(wynik.kolejnosc);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Błąd: " + ex.Message);
             }
         }
     }

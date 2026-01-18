@@ -42,7 +42,9 @@
             groupBoxwynik = new GroupBox();
             flpWynik = new FlowLayoutPanel();
             lblWynikKoszt = new Label();
-            btnObliczprawidlowy = new Button();
+            btnAlgorytmDP = new Button();
+            btnAlgorytmBnB = new Button();
+            btnAlgorytmHeurystyka = new Button();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)nudKara).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudTermin).BeginInit();
@@ -159,12 +161,14 @@
             // 
             // groupBoxwynik
             // 
+            groupBoxwynik.Controls.Add(btnAlgorytmHeurystyka);
+            groupBoxwynik.Controls.Add(btnAlgorytmBnB);
             groupBoxwynik.Controls.Add(flpWynik);
             groupBoxwynik.Controls.Add(lblWynikKoszt);
-            groupBoxwynik.Controls.Add(btnObliczprawidlowy);
+            groupBoxwynik.Controls.Add(btnAlgorytmDP);
             groupBoxwynik.Location = new Point(12, 205);
             groupBoxwynik.Name = "groupBoxwynik";
-            groupBoxwynik.Size = new Size(322, 381);
+            groupBoxwynik.Size = new Size(336, 488);
             groupBoxwynik.TabIndex = 3;
             groupBoxwynik.TabStop = false;
             groupBoxwynik.Text = "Wynik Optymalizacji";
@@ -173,7 +177,7 @@
             // 
             flpWynik.AutoScroll = true;
             flpWynik.BackColor = SystemColors.ButtonHighlight;
-            flpWynik.Location = new Point(16, 108);
+            flpWynik.Location = new Point(15, 224);
             flpWynik.Name = "flpWynik";
             flpWynik.Size = new Size(289, 248);
             flpWynik.TabIndex = 2;
@@ -181,27 +185,47 @@
             // lblWynikKoszt
             // 
             lblWynikKoszt.AutoSize = true;
-            lblWynikKoszt.Location = new Point(12, 67);
+            lblWynikKoszt.Location = new Point(16, 138);
             lblWynikKoszt.Name = "lblWynikKoszt";
             lblWynikKoszt.Size = new Size(58, 20);
             lblWynikKoszt.TabIndex = 1;
             lblWynikKoszt.Text = "Koszt: -";
             // 
-            // btnObliczprawidlowy
+            // btnAlgorytmDP
             // 
-            btnObliczprawidlowy.Location = new Point(12, 28);
-            btnObliczprawidlowy.Name = "btnObliczprawidlowy";
-            btnObliczprawidlowy.Size = new Size(94, 29);
-            btnObliczprawidlowy.TabIndex = 0;
-            btnObliczprawidlowy.Text = "Oblicz Harmonogram";
-            btnObliczprawidlowy.UseVisualStyleBackColor = true;
-            btnObliczprawidlowy.Click += btnObliczprawidlowy_Click;
+            btnAlgorytmDP.Location = new Point(12, 28);
+            btnAlgorytmDP.Name = "btnAlgorytmDP";
+            btnAlgorytmDP.Size = new Size(304, 29);
+            btnAlgorytmDP.TabIndex = 0;
+            btnAlgorytmDP.Text = "Oblicz Programowaniem Dynamicznym";
+            btnAlgorytmDP.UseVisualStyleBackColor = true;
+            btnAlgorytmDP.Click += btnAlgorytmDP_Click;
+            // 
+            // btnAlgorytmBnB
+            // 
+            btnAlgorytmBnB.Location = new Point(14, 65);
+            btnAlgorytmBnB.Name = "btnAlgorytmBnB";
+            btnAlgorytmBnB.Size = new Size(302, 29);
+            btnAlgorytmBnB.TabIndex = 3;
+            btnAlgorytmBnB.Text = "Oblicz Podziałem i Ograniczeniami";
+            btnAlgorytmBnB.UseVisualStyleBackColor = true;
+            btnAlgorytmBnB.Click += btnAlgorytmBnB_Click;
+            // 
+            // btnAlgorytmHeurystyka
+            // 
+            btnAlgorytmHeurystyka.Location = new Point(16, 106);
+            btnAlgorytmHeurystyka.Name = "btnAlgorytmHeurystyka";
+            btnAlgorytmHeurystyka.Size = new Size(300, 29);
+            btnAlgorytmHeurystyka.TabIndex = 4;
+            btnAlgorytmHeurystyka.Text = "Oblicz Heurystyką Zachłanną";
+            btnAlgorytmHeurystyka.UseVisualStyleBackColor = true;
+            btnAlgorytmHeurystyka.Click += btnAlgorytmHeurystyka_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1005, 612);
+            ClientSize = new Size(1005, 730);
             Controls.Add(groupBoxwynik);
             Controls.Add(groupboxlista);
             Controls.Add(groupBox1);
@@ -233,7 +257,9 @@
         private DataGridView dgvZadania;
         private GroupBox groupBoxwynik;
         private Label lblWynikKoszt;
-        private Button btnObliczprawidlowy;
+        private Button btnAlgorytmDP;
         private FlowLayoutPanel flpWynik;
+        private Button btnAlgorytmBnB;
+        private Button btnAlgorytmHeurystyka;
     }
 }
