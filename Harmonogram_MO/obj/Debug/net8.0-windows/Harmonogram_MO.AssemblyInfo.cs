@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Harmonogram_MO")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0977128ecf8adea3690f298ae19815b2bfc7352d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8c72c92ea33bb51c86875d2d046587113d76f477")]
 [assembly: System.Reflection.AssemblyProductAttribute("Harmonogram_MO")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Harmonogram_MO")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

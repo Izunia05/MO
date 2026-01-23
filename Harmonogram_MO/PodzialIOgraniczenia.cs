@@ -6,62 +6,82 @@ namespace Harmonogram_MO
 {
     public class BnB
     {
-        // Zmienne do przechowywania najlepszego znalezionego wyniku
+        // Najlepszy znaleziony wynik
         private static int _minKoszt;
         private static List<int> _najlepszaKolejnosc;
 
-        public static (int koszt, List<int> kolejnosc) Rozwiaz(List<PD_algo.Zadanie> zadania)
+        public static (int koszt, List<ScheduledTask> harmonogram)
+            Rozwiaz(List<PD_algo.Zadanie> zadania)
         {
-            // Resetujemy zmienne przed startem
             _minKoszt = int.MaxValue;
             _najlepszaKolejnosc = new List<int>();
 
-            // Lista dostępnych zadań (kopia)
             var dostepne = new List<PD_algo.Zadanie>(zadania);
 
-            // Start rekurencji
+            // START rekurencji — UWAGA: List<int>
             Rekurencja(dostepne, 0, 0, new List<int>());
 
-            return (_minKoszt, _najlepszaKolejnosc);
+            // 🔥 KONWERSJA NA HARMONOGRAM (DO GANTTA)
+            List<ScheduledTask> harmonogram = new List<ScheduledTask>();
+            int obecnyCzas = 0;
+
+            foreach (int id in _najlepszaKolejnosc)
+            {
+                var z = zadania.First(x => x.Id == id);
+
+                harmonogram.Add(new ScheduledTask
+                {
+                    Id = z.Id,
+                    Name = $"Zadanie {z.Id}",
+                    StartTime = obecnyCzas,
+                    Duration = z.Czas,
+                    Priority = z.Kara
+                });
+
+                obecnyCzas += z.Czas;
+            }
+
+            return (_minKoszt, harmonogram);
         }
 
-        private static void Rekurencja(List<PD_algo.Zadanie> dostepne, int czasCurrent, int kosztCurrent, List<int> sciezka)
+        private static void Rekurencja(
+            List<PD_algo.Zadanie> dostepne,
+            int czasCurrent,
+            int kosztCurrent,
+            List<int> sciezka)
         {
-            // OGRANICZENIE (BOUND):
-            // Jeśli obecny koszt już jest gorszy niż najlepszy znany, zawracamy.
-            if (kosztCurrent >= _minKoszt) return;
+            // BOUND
+            if (kosztCurrent >= _minKoszt)
+                return;
 
-            // Jeśli lista zadań jest pusta, to znaczy, że mamy pełne rozwiązanie
+            // Pełne rozwiązanie
             if (dostepne.Count == 0)
             {
                 if (kosztCurrent < _minKoszt)
                 {
                     _minKoszt = kosztCurrent;
-                    _najlepszaKolejnosc = new List<int>(sciezka); // Zapisujemy wynik
+                    _najlepszaKolejnosc = new List<int>(sciezka);
                 }
                 return;
             }
 
-            // PODZIAŁ (BRANCH):
-            // Próbujemy każde z dostępnych zadań jako następne
+            // BRANCH
             for (int i = 0; i < dostepne.Count; i++)
             {
                 var zadanie = dostepne[i];
 
-                // Symulujemy dodanie tego zadania
-                int czasPoZadaniu = czasCurrent + zadanie.Czas;
-                int spoznienie = Math.Max(0, czasPoZadaniu - zadanie.Termin);
-                int nowyKoszt = kosztCurrent + (spoznienie * zadanie.Kara);
+                int czasPo = czasCurrent + zadanie.Czas;
+                int spoznienie = Math.Max(0, czasPo - zadanie.Termin);
+                int nowyKoszt = kosztCurrent + spoznienie * zadanie.Kara;
 
-                // Dodajemy do ścieżki i usuwamy z dostępnych
                 sciezka.Add(zadanie.Id);
+
                 var pozostale = new List<PD_algo.Zadanie>(dostepne);
                 pozostale.RemoveAt(i);
 
-                // Schodzimy głębiej
-                Rekurencja(pozostale, czasPoZadaniu, nowyKoszt, sciezka);
+                Rekurencja(pozostale, czasPo, nowyKoszt, sciezka);
 
-                // Cofamy zmianę (backtracking), żeby pętla mogła sprawdzić inne zadanie
+                // backtracking
                 sciezka.RemoveAt(sciezka.Count - 1);
             }
         }

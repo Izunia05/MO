@@ -13,6 +13,9 @@ namespace Harmonogram_MO
         private List<PD_algo.Zadanie> _listaZadan = new List<PD_algo.Zadanie>();
         private int _licznikId = 1;
 
+        private List<ScheduledTask> currentSchedule;
+        private Gantt gantt = new Gantt();
+
         public Form1()
         {
             InitializeComponent();
@@ -61,9 +64,13 @@ namespace Harmonogram_MO
             _licznikId = 1; // Resetujemy licznik ID
             lblWynikKoszt.Text = "Koszt: -";
             lblWynikKoszt.ForeColor = Color.Black;
+
+            currentSchedule = null;   // 🔥 czyścimy dane do Gantta
+            panelGantt.Invalidate();  // 🔥 wymuszamy odświeżenie (czyli „pusty” Gantt)
+
         }
 
-     
+
         private void WizualizujWynik(List<int> kolejnoscId)
         {
             // Najpierw czyścimy stare wyniki
@@ -107,17 +114,25 @@ namespace Harmonogram_MO
         private void btnAlgorytmDP_Click(object sender, EventArgs e)
         {
             UruchomObliczenia("DP");
+            var wynik = PD_algo.Rozwiaz(_listaZadan);
+
         }
 
         private void btnAlgorytmBnB_Click(object sender, EventArgs e)
         {
             UruchomObliczenia("BnB");
+
         }
 
         private void btnAlgorytmHeurystyka_Click(object sender, EventArgs e)
         {
             UruchomObliczenia("HEURYSTYKA");
+
+            var wynik = Heurystyka.Rozwiaz(_listaZadan);
+
+
         }
+
 
         private void UruchomObliczenia(string typAlgorytmu)
         {
@@ -135,10 +150,8 @@ namespace Harmonogram_MO
 
             try
             {
-                // Zmienna na wynik
-                (int koszt, List<int> kolejnosc) wynik = (0, new List<int>());
+                (int koszt, List<ScheduledTask> harmonogram) wynik;
 
-                // 3. Wybór algorytmu (Switch)
                 switch (typAlgorytmu)
                 {
                     case "DP":
@@ -152,7 +165,16 @@ namespace Harmonogram_MO
                     case "HEURYSTYKA":
                         wynik = Heurystyka.Rozwiaz(_listaZadan);
                         break;
+
+                    default:
+                        MessageBox.Show("Ten algorytm jeszcze nie obsługuje Gantta");
+                        return;
                 }
+
+                // 🔥 TU „odpalamy” Gantta
+                currentSchedule = wynik.harmonogram;
+                panelGantt.Invalidate();
+
 
                 // 4. Wyświetlenie wyniku (To samo co wcześniej, ale teraz uniwersalne)
                 lblWynikKoszt.Text = $"Algorytm: {typAlgorytmu}\nKoszt: {wynik.koszt} PLN";
@@ -160,13 +182,25 @@ namespace Harmonogram_MO
                 if (wynik.koszt == 0) lblWynikKoszt.ForeColor = Color.Green;
                 else lblWynikKoszt.ForeColor = Color.Red;
 
-                WizualizujWynik(wynik.kolejnosc);
+                currentSchedule = wynik.harmonogram;
+                panelGantt.Invalidate();
+
 
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Błąd: " + ex.Message);
             }
+
         }
+
+        private void panelGantt_Paint(object sender, PaintEventArgs e)
+        {
+            if (currentSchedule != null && currentSchedule.Count > 0)
+            {
+                gantt.DrawGantt(e.Graphics, currentSchedule);
+            }
+        }
+
     }
 }

@@ -17,7 +17,7 @@ namespace Harmonogram_MO
             // Usunąłem 'Priorytet', bo w tym algorytmie 'Kara' pełni tę funkcję.
         }
 
-        public static (int koszt, List<int> kolejnosc) Rozwiaz(List<Zadanie> zadania)
+        public static (int koszt, List<ScheduledTask> harmonogram) Rozwiaz(List<Zadanie> zadania)
         {
             int n = zadania.Count;
             int maxMask = 1 << n; // 2^n
@@ -87,32 +87,51 @@ namespace Harmonogram_MO
             // 4. Odtwarzanie wyniku
             int ostatecznyKoszt = dp[maxMask - 1];
 
-            // Jeśli koszt nadal wynosi MaxValue, coś poszło nie tak (np. brak zadań)
-            if (ostatecznyKoszt == int.MaxValue) return (0, new List<int>());
+            if (ostatecznyKoszt == int.MaxValue)
+                return (0, new List<ScheduledTask>());
 
-            var kolejnosc = OdtworzKolejnosc(parent, n, zadania);
-            return (ostatecznyKoszt, kolejnosc);
+            var kolejnoscId = OdtworzKolejnosc(parent, n, zadania);
+
+            List<ScheduledTask> harmonogram = new List<ScheduledTask>();
+            int obecnyCzas = 0;
+
+            foreach (int id in kolejnoscId)
+            {
+                var z = zadania.First(x => x.Id == id);
+
+                harmonogram.Add(new ScheduledTask
+                {
+                    Id = z.Id,
+                    Name = $"Zadanie {z.Id}",
+                    StartTime = obecnyCzas,
+                    Duration = z.Czas,
+                    Priority = z.Kara
+                });
+
+                obecnyCzas += z.Czas;
+            }
+
+            return (ostatecznyKoszt, harmonogram);
+
         }
 
         private static List<int> OdtworzKolejnosc(int[] parent, int n, List<Zadanie> zadania)
         {
             List<int> kolejnoscId = new List<int>();
-            int mask = (1 << n) - 1; // Pełna maska (wszystkie bity 1)
+            int mask = (1 << n) - 1;
 
             while (mask > 0)
             {
                 int zadanieIndex = parent[mask];
-                if (zadanieIndex == -1) break; // Zabezpieczenie
+                if (zadanieIndex == -1) break;
 
-                // Dodajemy ID zadania (zamiast indeksu tablicy, co jest bardziej czytelne dla usera)
                 kolejnoscId.Add(zadania[zadanieIndex].Id);
-
-                // Usuwamy to zadanie z maski, cofając się do poprzedniego stanu
                 mask ^= (1 << zadanieIndex);
             }
 
-            kolejnoscId.Reverse(); // Odwracamy, bo szliśmy od końca
+            kolejnoscId.Reverse();
             return kolejnoscId;
         }
+
     }
 }
