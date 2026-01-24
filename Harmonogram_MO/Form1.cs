@@ -19,6 +19,13 @@ namespace Harmonogram_MO
         public Form1()
         {
             InitializeComponent();
+
+            this.ClientSize = new Size(691, 574);
+
+            nudCzas.MouseDown += Numeric_MouseDown;
+            nudTermin.MouseDown += Numeric_MouseDown;
+            nudKara.MouseDown += Numeric_MouseDown;
+
             KonfigurujTabele();
         }
         private void KonfigurujTabele()
@@ -59,7 +66,7 @@ namespace Harmonogram_MO
         {
             _listaZadan.Clear();
             dgvZadania.Rows.Clear();
-            flpWynik.Controls.Clear();
+           
 
             _licznikId = 1; // Resetujemy licznik ID
             lblWynikKoszt.Text = "Koszt: -";
@@ -68,49 +75,15 @@ namespace Harmonogram_MO
             currentSchedule = null;   // 🔥 czyścimy dane do Gantta
             panelGantt.Invalidate();  // 🔥 wymuszamy odświeżenie (czyli „pusty” Gantt)
 
+            nudCzas.Value = 0;
+            nudTermin.Value = 0;
+            nudKara.Value = 0;
+
+
         }
 
 
-        private void WizualizujWynik(List<int> kolejnoscId)
-        {
-            // Najpierw czyścimy stare wyniki
-            flpWynik.Controls.Clear();
 
-            foreach (int id in kolejnoscId)
-            {
-                // Znajdźmy szczegóły tego zadania w naszej liście
-                var zadanie = _listaZadan.FirstOrDefault(z => z.Id == id);
-                if (zadanie == null) continue;
-
-                // Tworzymy "klocek" (Button, bo wygląda ładnie)
-                Button klocek = new Button();
-                klocek.Text = $"ID: {id}\n({zadanie.Czas}h)";
-                klocek.Size = new Size(80, 50);
-                klocek.BackColor = Color.LightSkyBlue;
-                klocek.FlatStyle = FlatStyle.Flat;
-                klocek.FlatAppearance.BorderSize = 0;
-                klocek.Enabled = false; // Żeby nie dało się go klikać, ma tylko wyglądać
-                klocek.ForeColor = Color.Black;
-                klocek.Font = new Font("Segoe UI", 9, FontStyle.Bold);
-
-                // Dodajemy klocek do panelu
-                flpWynik.Controls.Add(klocek);
-
-                // Jeśli to nie jest ostatni element, dodajemy strzałkę
-                if (id != kolejnoscId.Last())
-                {
-                    Label strzalka = new Label();
-                    strzalka.Text = "➜";
-                    strzalka.AutoSize = true;
-                    strzalka.Font = new Font("Segoe UI", 15, FontStyle.Bold);
-                    strzalka.ForeColor = Color.Gray;
-                    // Centrowanie strzałki w pionie (margines górny)
-                    strzalka.Margin = new Padding(0, 15, 0, 0);
-
-                    flpWynik.Controls.Add(strzalka);
-                }
-            }
-        }
         private void btnAlgorytmDP_Click(object sender, EventArgs e)
         {
             UruchomObliczenia("DP");
@@ -201,6 +174,19 @@ namespace Harmonogram_MO
                 gantt.DrawGantt(e.Graphics, currentSchedule);
             }
         }
+        private void Numeric_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (sender is NumericUpDown nud && nud.Value == 0)
+            {
+                nud.BeginInvoke((Action)(() =>
+                {
+                    nud.Select(0, nud.Text.Length);
+                }));
+            }
+        }
+
+
 
     }
+
 }

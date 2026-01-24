@@ -81,9 +81,9 @@ namespace Harmonogram_MO
         // 🔹 kolory wg priorytetu
         private Brush GetBrushByPriority(int priority)
         {
-            if (priority >= 6)
+            if (priority >= 50)
                 return Brushes.IndianRed;
-            else if (priority >= 3)
+            else if (priority >= 25)
                 return Brushes.Goldenrod;
             else
                 return Brushes.SteelBlue;

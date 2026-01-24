@@ -42,10 +42,10 @@
             groupBoxwynik = new GroupBox();
             btnAlgorytmHeurystyka = new Button();
             btnAlgorytmBnB = new Button();
-            flpWynik = new FlowLayoutPanel();
             lblWynikKoszt = new Label();
             btnAlgorytmDP = new Button();
             panelGantt = new Panel();
+            groupBox2 = new GroupBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)nudKara).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudTermin).BeginInit();
@@ -53,6 +53,7 @@
             groupboxlista.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvZadania).BeginInit();
             groupBoxwynik.SuspendLayout();
+            groupBox2.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox1
@@ -65,9 +66,9 @@
             groupBox1.Controls.Add(nudCzas);
             groupBox1.Controls.Add(label1);
             groupBox1.Location = new Point(15, 15);
-            groupBox1.Margin = new Padding(4, 4, 4, 4);
+            groupBox1.Margin = new Padding(4);
             groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(4, 4, 4, 4);
+            groupBox1.Padding = new Padding(4);
             groupBox1.Size = new Size(402, 220);
             groupBox1.TabIndex = 1;
             groupBox1.TabStop = false;
@@ -76,7 +77,7 @@
             // btnDodaj
             // 
             btnDodaj.Location = new Point(91, 158);
-            btnDodaj.Margin = new Padding(4, 4, 4, 4);
+            btnDodaj.Margin = new Padding(4);
             btnDodaj.Name = "btnDodaj";
             btnDodaj.Size = new Size(164, 51);
             btnDodaj.TabIndex = 6;
@@ -86,8 +87,8 @@
             // 
             // nudKara
             // 
-            nudKara.Location = new Point(256, 111);
-            nudKara.Margin = new Padding(4, 4, 4, 4);
+            nudKara.Location = new Point(288, 108);
+            nudKara.Margin = new Padding(4);
             nudKara.Maximum = new decimal(new int[] { 3000, 0, 0, 0 });
             nudKara.Name = "nudKara";
             nudKara.Size = new Size(76, 31);
@@ -95,8 +96,8 @@
             // 
             // nudTermin
             // 
-            nudTermin.Location = new Point(256, 66);
-            nudTermin.Margin = new Padding(4, 4, 4, 4);
+            nudTermin.Location = new Point(288, 66);
+            nudTermin.Margin = new Padding(4);
             nudTermin.Name = "nudTermin";
             nudTermin.Size = new Size(76, 31);
             nudTermin.TabIndex = 4;
@@ -107,9 +108,9 @@
             lblOpisKary.Location = new Point(19, 114);
             lblOpisKary.Margin = new Padding(4, 0, 4, 0);
             lblOpisKary.Name = "lblOpisKary";
-            lblOpisKary.Size = new Size(161, 25);
+            lblOpisKary.Size = new Size(207, 25);
             lblOpisKary.TabIndex = 3;
-            lblOpisKary.Text = "Kara za spóźnienie:";
+            lblOpisKary.Text = "Kara za spóźnienie (PLN):";
             // 
             // label2
             // 
@@ -117,14 +118,14 @@
             label2.Location = new Point(19, 75);
             label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
-            label2.Size = new Size(68, 25);
+            label2.Size = new Size(255, 25);
             label2.TabIndex = 2;
-            label2.Text = "Termin:";
+            label2.Text = "Czas na wykonanie zadania (h):";
             // 
             // nudCzas
             // 
-            nudCzas.Location = new Point(256, 25);
-            nudCzas.Margin = new Padding(4, 4, 4, 4);
+            nudCzas.Location = new Point(288, 25);
+            nudCzas.Margin = new Padding(4);
             nudCzas.Name = "nudCzas";
             nudCzas.Size = new Size(76, 31);
             nudCzas.TabIndex = 1;
@@ -143,11 +144,11 @@
             // 
             groupboxlista.Controls.Add(btnWyczysc);
             groupboxlista.Controls.Add(dgvZadania);
-            groupboxlista.Location = new Point(442, 40);
-            groupboxlista.Margin = new Padding(4, 4, 4, 4);
+            groupboxlista.Location = new Point(442, 15);
+            groupboxlista.Margin = new Padding(4);
             groupboxlista.Name = "groupboxlista";
-            groupboxlista.Padding = new Padding(4, 4, 4, 4);
-            groupboxlista.Size = new Size(506, 438);
+            groupboxlista.Padding = new Padding(4);
+            groupboxlista.Size = new Size(506, 463);
             groupboxlista.TabIndex = 2;
             groupboxlista.TabStop = false;
             groupboxlista.Text = "Lista Zadań";
@@ -155,7 +156,7 @@
             // btnWyczysc
             // 
             btnWyczysc.Location = new Point(181, 300);
-            btnWyczysc.Margin = new Padding(4, 4, 4, 4);
+            btnWyczysc.Margin = new Padding(4);
             btnWyczysc.Name = "btnWyczysc";
             btnWyczysc.Size = new Size(118, 64);
             btnWyczysc.TabIndex = 1;
@@ -167,7 +168,7 @@
             // 
             dgvZadania.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvZadania.Location = new Point(8, 32);
-            dgvZadania.Margin = new Padding(4, 4, 4, 4);
+            dgvZadania.Margin = new Padding(4);
             dgvZadania.Name = "dgvZadania";
             dgvZadania.RowHeadersWidth = 51;
             dgvZadania.Size = new Size(479, 252);
@@ -177,14 +178,13 @@
             // 
             groupBoxwynik.Controls.Add(btnAlgorytmHeurystyka);
             groupBoxwynik.Controls.Add(btnAlgorytmBnB);
-            groupBoxwynik.Controls.Add(flpWynik);
             groupBoxwynik.Controls.Add(lblWynikKoszt);
             groupBoxwynik.Controls.Add(btnAlgorytmDP);
             groupBoxwynik.Location = new Point(15, 256);
-            groupBoxwynik.Margin = new Padding(4, 4, 4, 4);
+            groupBoxwynik.Margin = new Padding(4);
             groupBoxwynik.Name = "groupBoxwynik";
-            groupBoxwynik.Padding = new Padding(4, 4, 4, 4);
-            groupBoxwynik.Size = new Size(420, 610);
+            groupBoxwynik.Padding = new Padding(4);
+            groupBoxwynik.Size = new Size(420, 222);
             groupBoxwynik.TabIndex = 3;
             groupBoxwynik.TabStop = false;
             groupBoxwynik.Text = "Wynik Optymalizacji";
@@ -192,7 +192,7 @@
             // btnAlgorytmHeurystyka
             // 
             btnAlgorytmHeurystyka.Location = new Point(20, 132);
-            btnAlgorytmHeurystyka.Margin = new Padding(4, 4, 4, 4);
+            btnAlgorytmHeurystyka.Margin = new Padding(4);
             btnAlgorytmHeurystyka.Name = "btnAlgorytmHeurystyka";
             btnAlgorytmHeurystyka.Size = new Size(375, 36);
             btnAlgorytmHeurystyka.TabIndex = 4;
@@ -203,23 +203,13 @@
             // btnAlgorytmBnB
             // 
             btnAlgorytmBnB.Location = new Point(18, 81);
-            btnAlgorytmBnB.Margin = new Padding(4, 4, 4, 4);
+            btnAlgorytmBnB.Margin = new Padding(4);
             btnAlgorytmBnB.Name = "btnAlgorytmBnB";
             btnAlgorytmBnB.Size = new Size(378, 36);
             btnAlgorytmBnB.TabIndex = 3;
             btnAlgorytmBnB.Text = "Oblicz Podziałem i Ograniczeniami";
             btnAlgorytmBnB.UseVisualStyleBackColor = true;
             btnAlgorytmBnB.Click += btnAlgorytmBnB_Click;
-            // 
-            // flpWynik
-            // 
-            flpWynik.AutoScroll = true;
-            flpWynik.BackColor = SystemColors.ButtonHighlight;
-            flpWynik.Location = new Point(19, 280);
-            flpWynik.Margin = new Padding(4, 4, 4, 4);
-            flpWynik.Name = "flpWynik";
-            flpWynik.Size = new Size(361, 310);
-            flpWynik.TabIndex = 2;
             // 
             // lblWynikKoszt
             // 
@@ -234,7 +224,7 @@
             // btnAlgorytmDP
             // 
             btnAlgorytmDP.Location = new Point(15, 35);
-            btnAlgorytmDP.Margin = new Padding(4, 4, 4, 4);
+            btnAlgorytmDP.Margin = new Padding(4);
             btnAlgorytmDP.Name = "btnAlgorytmDP";
             btnAlgorytmDP.Size = new Size(380, 36);
             btnAlgorytmDP.TabIndex = 0;
@@ -246,22 +236,32 @@
             // 
             panelGantt.BackColor = SystemColors.ControlLightLight;
             panelGantt.BorderStyle = BorderStyle.FixedSingle;
-            panelGantt.Location = new Point(461, 504);
+            panelGantt.Location = new Point(21, 44);
             panelGantt.Name = "panelGantt";
-            panelGantt.Size = new Size(509, 370);
+            panelGantt.Size = new Size(881, 327);
             panelGantt.TabIndex = 4;
             panelGantt.Paint += panelGantt_Paint;
+            // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(panelGantt);
+            groupBox2.Location = new Point(14, 493);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new Size(933, 407);
+            groupBox2.TabIndex = 5;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Wykres Gantta";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1256, 912);
-            Controls.Add(panelGantt);
+            ClientSize = new Size(969, 918);
+            Controls.Add(groupBox2);
             Controls.Add(groupBoxwynik);
             Controls.Add(groupboxlista);
             Controls.Add(groupBox1);
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "Form1";
             Text = "Form1";
             groupBox1.ResumeLayout(false);
@@ -273,6 +273,7 @@
             ((System.ComponentModel.ISupportInitialize)dgvZadania).EndInit();
             groupBoxwynik.ResumeLayout(false);
             groupBoxwynik.PerformLayout();
+            groupBox2.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -291,9 +292,9 @@
         private GroupBox groupBoxwynik;
         private Label lblWynikKoszt;
         private Button btnAlgorytmDP;
-        private FlowLayoutPanel flpWynik;
         private Button btnAlgorytmBnB;
         private Button btnAlgorytmHeurystyka;
         private Panel panelGantt;
+        private GroupBox groupBox2;
     }
 }
