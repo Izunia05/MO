@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             groupBox1 = new GroupBox();
             btnDodaj = new Button();
             nudKara = new NumericUpDown();
@@ -58,6 +59,7 @@
             // 
             // groupBox1
             // 
+            groupBox1.BackColor = Color.Transparent;
             groupBox1.Controls.Add(btnDodaj);
             groupBox1.Controls.Add(nudKara);
             groupBox1.Controls.Add(nudTermin);
@@ -65,6 +67,8 @@
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(nudCzas);
             groupBox1.Controls.Add(label1);
+            groupBox1.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            groupBox1.ForeColor = SystemColors.ButtonHighlight;
             groupBox1.Location = new Point(15, 15);
             groupBox1.Margin = new Padding(4);
             groupBox1.Name = "groupBox1";
@@ -76,6 +80,7 @@
             // 
             // btnDodaj
             // 
+            btnDodaj.ForeColor = SystemColors.ActiveCaptionText;
             btnDodaj.Location = new Point(91, 158);
             btnDodaj.Margin = new Padding(4);
             btnDodaj.Name = "btnDodaj";
@@ -87,7 +92,7 @@
             // 
             // nudKara
             // 
-            nudKara.Location = new Point(288, 108);
+            nudKara.Location = new Point(316, 109);
             nudKara.Margin = new Padding(4);
             nudKara.Maximum = new decimal(new int[] { 3000, 0, 0, 0 });
             nudKara.Name = "nudKara";
@@ -96,11 +101,12 @@
             // 
             // nudTermin
             // 
-            nudTermin.Location = new Point(288, 66);
+            nudTermin.Location = new Point(317, 66);
             nudTermin.Margin = new Padding(4);
             nudTermin.Name = "nudTermin";
             nudTermin.Size = new Size(76, 31);
             nudTermin.TabIndex = 4;
+            nudTermin.ValueChanged += nudTermin_ValueChanged;
             // 
             // lblOpisKary
             // 
@@ -108,7 +114,7 @@
             lblOpisKary.Location = new Point(19, 114);
             lblOpisKary.Margin = new Padding(4, 0, 4, 0);
             lblOpisKary.Name = "lblOpisKary";
-            lblOpisKary.Size = new Size(207, 25);
+            lblOpisKary.Size = new Size(220, 25);
             lblOpisKary.TabIndex = 3;
             lblOpisKary.Text = "Kara za spóźnienie (PLN):";
             // 
@@ -118,13 +124,13 @@
             label2.Location = new Point(19, 75);
             label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
-            label2.Size = new Size(255, 25);
+            label2.Size = new Size(265, 25);
             label2.TabIndex = 2;
             label2.Text = "Czas na wykonanie zadania (h):";
             // 
             // nudCzas
             // 
-            nudCzas.Location = new Point(288, 25);
+            nudCzas.Location = new Point(318, 24);
             nudCzas.Margin = new Padding(4);
             nudCzas.Name = "nudCzas";
             nudCzas.Size = new Size(76, 31);
@@ -136,14 +142,17 @@
             label1.Location = new Point(19, 34);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(139, 25);
+            label1.Size = new Size(147, 25);
             label1.TabIndex = 0;
             label1.Text = "Czas trwania (h):";
             // 
             // groupboxlista
             // 
+            groupboxlista.BackColor = Color.Transparent;
             groupboxlista.Controls.Add(btnWyczysc);
             groupboxlista.Controls.Add(dgvZadania);
+            groupboxlista.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            groupboxlista.ForeColor = SystemColors.ActiveCaptionText;
             groupboxlista.Location = new Point(442, 15);
             groupboxlista.Margin = new Padding(4);
             groupboxlista.Name = "groupboxlista";
@@ -155,7 +164,8 @@
             // 
             // btnWyczysc
             // 
-            btnWyczysc.Location = new Point(181, 300);
+            btnWyczysc.ForeColor = SystemColors.ActiveCaptionText;
+            btnWyczysc.Location = new Point(177, 322);
             btnWyczysc.Margin = new Padding(4);
             btnWyczysc.Name = "btnWyczysc";
             btnWyczysc.Size = new Size(118, 64);
@@ -166,6 +176,7 @@
             // 
             // dgvZadania
             // 
+            dgvZadania.BackgroundColor = SystemColors.ActiveBorder;
             dgvZadania.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvZadania.Location = new Point(8, 32);
             dgvZadania.Margin = new Padding(4);
@@ -176,10 +187,13 @@
             // 
             // groupBoxwynik
             // 
+            groupBoxwynik.BackColor = Color.Transparent;
             groupBoxwynik.Controls.Add(btnAlgorytmHeurystyka);
             groupBoxwynik.Controls.Add(btnAlgorytmBnB);
             groupBoxwynik.Controls.Add(lblWynikKoszt);
             groupBoxwynik.Controls.Add(btnAlgorytmDP);
+            groupBoxwynik.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            groupBoxwynik.ForeColor = SystemColors.ButtonHighlight;
             groupBoxwynik.Location = new Point(15, 256);
             groupBoxwynik.Margin = new Padding(4);
             groupBoxwynik.Name = "groupBoxwynik";
@@ -191,6 +205,7 @@
             // 
             // btnAlgorytmHeurystyka
             // 
+            btnAlgorytmHeurystyka.ForeColor = SystemColors.ActiveCaptionText;
             btnAlgorytmHeurystyka.Location = new Point(20, 132);
             btnAlgorytmHeurystyka.Margin = new Padding(4);
             btnAlgorytmHeurystyka.Name = "btnAlgorytmHeurystyka";
@@ -202,6 +217,7 @@
             // 
             // btnAlgorytmBnB
             // 
+            btnAlgorytmBnB.ForeColor = SystemColors.ActiveCaptionText;
             btnAlgorytmBnB.Location = new Point(18, 81);
             btnAlgorytmBnB.Margin = new Padding(4);
             btnAlgorytmBnB.Name = "btnAlgorytmBnB";
@@ -217,12 +233,13 @@
             lblWynikKoszt.Location = new Point(20, 172);
             lblWynikKoszt.Margin = new Padding(4, 0, 4, 0);
             lblWynikKoszt.Name = "lblWynikKoszt";
-            lblWynikKoszt.Size = new Size(71, 25);
+            lblWynikKoszt.Size = new Size(73, 25);
             lblWynikKoszt.TabIndex = 1;
             lblWynikKoszt.Text = "Koszt: -";
             // 
             // btnAlgorytmDP
             // 
+            btnAlgorytmDP.ForeColor = SystemColors.ActiveCaptionText;
             btnAlgorytmDP.Location = new Point(15, 35);
             btnAlgorytmDP.Margin = new Padding(4);
             btnAlgorytmDP.Name = "btnAlgorytmDP";
@@ -234,17 +251,22 @@
             // 
             // panelGantt
             // 
+            panelGantt.AutoScroll = true;
             panelGantt.BackColor = SystemColors.ControlLightLight;
             panelGantt.BorderStyle = BorderStyle.FixedSingle;
-            panelGantt.Location = new Point(21, 44);
+            panelGantt.Dock = DockStyle.Fill;
+            panelGantt.Location = new Point(3, 27);
             panelGantt.Name = "panelGantt";
-            panelGantt.Size = new Size(881, 327);
+            panelGantt.Size = new Size(927, 377);
             panelGantt.TabIndex = 4;
             panelGantt.Paint += panelGantt_Paint;
             // 
             // groupBox2
             // 
+            groupBox2.BackColor = Color.Transparent;
             groupBox2.Controls.Add(panelGantt);
+            groupBox2.Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold);
+            groupBox2.ForeColor = SystemColors.ButtonHighlight;
             groupBox2.Location = new Point(14, 493);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new Size(933, 407);
@@ -256,12 +278,14 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(969, 918);
             Controls.Add(groupBox2);
             Controls.Add(groupBoxwynik);
             Controls.Add(groupboxlista);
             Controls.Add(groupBox1);
             Margin = new Padding(4);
+            MaximizeBox = false;
             Name = "Form1";
             Text = "Form1";
             groupBox1.ResumeLayout(false);

@@ -66,7 +66,7 @@ namespace Harmonogram_MO
         {
             _listaZadan.Clear();
             dgvZadania.Rows.Clear();
-           
+
 
             _licznikId = 1; // Resetujemy licznik ID
             lblWynikKoszt.Text = "Koszt: -";
@@ -185,8 +185,10 @@ namespace Harmonogram_MO
             }
         }
 
+        private void nudTermin_ValueChanged(object sender, EventArgs e)
+        {
 
-
+        }
     }
 
 }
