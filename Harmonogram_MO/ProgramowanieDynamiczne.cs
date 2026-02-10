@@ -1,95 +1,97 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Harmonogram_MO
 {
     public class PD_algo
     {
+        // ===== LICZNIK STANÓW DP =====
+        public static long dpStates = 0;
+
         public class Zadanie
         {
             public int Id { get; set; }
-            public int Czas { get; set; }     // Długość trwania zadania (Processing Time)
+            public int Czas { get; set; }     // Processing time
             public int Termin { get; set; }   // Deadline
-            public int Kara { get; set; }     // Waga/Koszt za jednostkę spóźnienia
-            // Usunąłem 'Priorytet', bo w tym algorytmie 'Kara' pełni tę funkcję.
+            public int Kara { get; set; }     // Waga kary
         }
 
-        public static (int koszt, List<ScheduledTask> harmonogram) Rozwiaz(List<Zadanie> zadania)
+        // ===== ALGORYTM DP =====
+        public static (int koszt,
+                       List<ScheduledTask> harmonogram,
+                       long czasTicks,
+                       long dpStates)
+            Rozwiaz(List<Zadanie> zadania)
         {
+            // === START POMIARU CZASU ===
+            Stopwatch stopwatch = Stopwatch.StartNew();
+
+            dpStates = 0; // reset licznika
+
             int n = zadania.Count;
-            int maxMask = 1 << n; // 2^n
+            int maxMask = 1 << n;
 
-            // Tablice DP
-            int[] dp = new int[maxMask];       // minimalny koszt dla danego zbioru zadań
-            int[] czas = new int[maxMask];     // łączny czas wykonania zadań w masce
-            int[] parent = new int[maxMask];   // które zadanie dodaliśmy jako ostatnie, żeby tu dotrzeć
+            int[] dp = new int[maxMask];
+            int[] czas = new int[maxMask];
+            int[] parent = new int[maxMask];
 
-            // 1. Inicjalizacja
+            // Inicjalizacja
             for (int i = 0; i < maxMask; i++)
             {
-                dp[i] = int.MaxValue; // Ustawiamy na nieskończoność
+                dp[i] = int.MaxValue;
                 czas[i] = 0;
+                parent[i] = -1;
             }
 
-            dp[0] = 0;    // Stan początkowy: 0 zadań, 0 kosztu
-            parent[0] = -1;
+            dp[0] = 0;
 
-            // 2. Pre-kalkulacja czasów dla każdej maski
-            // (To optymalizacja: obliczamy sumę czasów zadań w danym podzbiorze)
+            // Pre-kalkulacja czasów
             for (int mask = 0; mask < maxMask; mask++)
             {
                 for (int i = 0; i < n; i++)
                 {
-                    // Jeśli i-te zadanie jest w masce
                     if ((mask & (1 << i)) != 0)
-                    {
                         czas[mask] += zadania[i].Czas;
-                    }
                 }
             }
 
-            // 3. Właściwa pętla DP
-            // Iterujemy po każdej możliwej masce (podzbiorze zadań)
+            // === GŁÓWNA PĘTLA DP ===
             for (int mask = 1; mask < maxMask; mask++)
             {
+                dpStates++; // LICZYMY STAN DP
+
                 for (int i = 0; i < n; i++)
                 {
-                    // Sprawdzamy, czy zadanie 'i' należy do obecnego zbioru (maski)
                     if ((mask & (1 << i)) != 0)
                     {
-                        int poprzedniaMaska = mask ^ (1 << i); // Stan bez zadania 'i'
+                        int prevMask = mask ^ (1 << i);
 
-                        // ZABEZPIECZENIE: Jeśli do poprzedniego stanu nie da się dojść, pomiń
-                        if (dp[poprzedniaMaska] == int.MaxValue) continue;
+                        if (dp[prevMask] == int.MaxValue)
+                            continue;
 
-                        // Obliczamy opóźnienie dla zadania 'i' zakładając, że robimy je na końcu tego zbioru
-                        // Czas zakończenia to czas całej maski (bo zadania są upakowane bez przerw)
                         int czasZakonczenia = czas[mask];
                         int opoznienie = Math.Max(0, czasZakonczenia - zadania[i].Termin);
 
-                        // Koszt to koszt poprzedniego stanu + kara za obecne zadanie
-                        // Używamy 'long' na chwilę, aby uniknąć overflow przy dodawaniu, choć int powinien wystarczyć przy rozsądnych danych
-                        long nowyKosztLong = (long)dp[poprzedniaMaska] + (long)opoznienie * zadania[i].Kara;
+                        long nowyKoszt =
+                            (long)dp[prevMask] +
+                            (long)opoznienie * zadania[i].Kara;
 
-                        // Jeśli znaleźliśmy tańszą drogę do tego stanu (maski)
-                        if (nowyKosztLong < dp[mask])
+                        if (nowyKoszt < dp[mask])
                         {
-                            dp[mask] = (int)nowyKosztLong;
-                            parent[mask] = i; // Zapisujemy, że doszliśmy tu wykonując zadanie 'i' jako ostatnie
+                            dp[mask] = (int)nowyKoszt;
+                            parent[mask] = i;
                         }
                     }
                 }
             }
 
-            // 4. Odtwarzanie wyniku
             int ostatecznyKoszt = dp[maxMask - 1];
-
             if (ostatecznyKoszt == int.MaxValue)
-                return (0, new List<ScheduledTask>());
+                return (0, new List<ScheduledTask>(), 0, 0);
 
+            // === ODTWORZENIE HARMONOGRAMU ===
             var kolejnoscId = OdtworzKolejnosc(parent, n, zadania);
 
             List<ScheduledTask> harmonogram = new List<ScheduledTask>();
@@ -111,27 +113,33 @@ namespace Harmonogram_MO
                 obecnyCzas += z.Czas;
             }
 
-            return (ostatecznyKoszt, harmonogram);
+            // === STOP POMIARU CZASU ===
+            stopwatch.Stop();
+            long timeTicks = stopwatch.ElapsedTicks;
 
+            // === ZWRACAMY WYNIKI EKSPERYMENTALNE ===
+            return (ostatecznyKoszt, harmonogram, timeTicks, dpStates);
         }
 
-        private static List<int> OdtworzKolejnosc(int[] parent, int n, List<Zadanie> zadania)
+        private static List<int> OdtworzKolejnosc(
+            int[] parent,
+            int n,
+            List<Zadanie> zadania)
         {
             List<int> kolejnoscId = new List<int>();
             int mask = (1 << n) - 1;
 
             while (mask > 0)
             {
-                int zadanieIndex = parent[mask];
-                if (zadanieIndex == -1) break;
+                int index = parent[mask];
+                if (index == -1) break;
 
-                kolejnoscId.Add(zadania[zadanieIndex].Id);
-                mask ^= (1 << zadanieIndex);
+                kolejnoscId.Add(zadania[index].Id);
+                mask ^= (1 << index);
             }
 
             kolejnoscId.Reverse();
             return kolejnoscId;
         }
-
     }
 }

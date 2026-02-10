@@ -1,27 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Harmonogram_MO
 {
     public class BnB
     {
-        // Najlepszy znaleziony wynik
+        // ===== NAJLEPSZY WYNIK =====
         private static int _minKoszt;
         private static List<int> _najlepszaKolejnosc;
 
-        public static (int koszt, List<ScheduledTask> harmonogram)
+        // ===== LICZNIKI EKSPERYMENTALNE =====
+        public static long visitedNodes = 0;
+        public static long prunedNodes = 0;
+
+        // ===== ALGORYTM B&B =====
+        public static (int koszt,
+                       List<ScheduledTask> harmonogram,
+                       long czasMs,
+                       long visitedNodes,
+                       long prunedNodes)
             Rozwiaz(List<PD_algo.Zadanie> zadania)
         {
             _minKoszt = int.MaxValue;
             _najlepszaKolejnosc = new List<int>();
 
+            visitedNodes = 0;
+            prunedNodes = 0;
+
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             var dostepne = new List<PD_algo.Zadanie>(zadania);
 
-            // START rekurencji — UWAGA: List<int>
             Rekurencja(dostepne, 0, 0, new List<int>());
 
-            // 🔥 KONWERSJA NA HARMONOGRAM (DO GANTTA)
+            // ===== KONWERSJA NA HARMONOGRAM =====
             List<ScheduledTask> harmonogram = new List<ScheduledTask>();
             int obecnyCzas = 0;
 
@@ -41,7 +56,11 @@ namespace Harmonogram_MO
                 obecnyCzas += z.Czas;
             }
 
-            return (_minKoszt, harmonogram);
+            stopwatch.Stop();
+            long timeTicks = stopwatch.ElapsedTicks;
+
+
+            return (_minKoszt, harmonogram, timeTicks, visitedNodes, prunedNodes);
         }
 
         private static void Rekurencja(
@@ -50,11 +69,16 @@ namespace Harmonogram_MO
             int kosztCurrent,
             List<int> sciezka)
         {
-            // BOUND
-            if (kosztCurrent >= _minKoszt)
-                return;
+            visitedNodes++; // ===== ODWIEDZONY WĘZEŁ =====
 
-            // Pełne rozwiązanie
+            // ===== BOUND (ODCIĘCIE) =====
+            if (kosztCurrent >= _minKoszt)
+            {
+                prunedNodes++;
+                return;
+            }
+
+            // ===== PEŁNE ROZWIĄZANIE =====
             if (dostepne.Count == 0)
             {
                 if (kosztCurrent < _minKoszt)
@@ -65,7 +89,7 @@ namespace Harmonogram_MO
                 return;
             }
 
-            // BRANCH
+            // ===== BRANCH =====
             for (int i = 0; i < dostepne.Count; i++)
             {
                 var zadanie = dostepne[i];
@@ -81,7 +105,7 @@ namespace Harmonogram_MO
 
                 Rekurencja(pozostale, czasPo, nowyKoszt, sciezka);
 
-                // backtracking
+                // ===== BACKTRACKING =====
                 sciezka.RemoveAt(sciezka.Count - 1);
             }
         }

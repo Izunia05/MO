@@ -10,6 +10,7 @@ namespace Harmonogram_MO
 {
     public partial class Form1 : Form
     {
+
         private List<PD_algo.Zadanie> _listaZadan = new List<PD_algo.Zadanie>();
         private int _licznikId = 1;
 
@@ -87,9 +88,8 @@ namespace Harmonogram_MO
         private void btnAlgorytmDP_Click(object sender, EventArgs e)
         {
             UruchomObliczenia("DP");
-            var wynik = PD_algo.Rozwiaz(_listaZadan);
-
         }
+
 
         private void btnAlgorytmBnB_Click(object sender, EventArgs e)
         {
@@ -128,21 +128,55 @@ namespace Harmonogram_MO
                 switch (typAlgorytmu)
                 {
                     case "DP":
-                        wynik = PD_algo.Rozwiaz(_listaZadan);
-                        break;
+                        {
+                            var wynikDP = PD_algo.Rozwiaz(_listaZadan);
+
+                            wynik = (wynikDP.koszt, wynikDP.harmonogram);
+
+                            lblCzas.Text = $"{wynikDP.czasTicks} ticks";
+                            lblOperacje.Text = $"Liczba stanów DP: {wynikDP.dpStates}";
+                            break;
+                        }
+
 
                     case "BnB":
-                        wynik = BnB.Rozwiaz(_listaZadan);
-                        break;
+                        {
+                            var wynikBnB = BnB.Rozwiaz(_listaZadan);
+
+                            // tylko to, co wspólne dla wszystkich algorytmów
+                            wynik = (wynikBnB.Item1, wynikBnB.Item2);
+
+                            // statystyki B&B
+                            lblCzas.Text = $"{wynikBnB.Item3} ticks";
+                            lblOperacje.Text =
+                                $"Węzły: {wynikBnB.Item4}, Odcięcia: {wynikBnB.Item5}";
+                            break;
+                        }
+
 
                     case "HEURYSTYKA":
-                        wynik = Heurystyka.Rozwiaz(_listaZadan);
-                        break;
+                        {
+                            var wynikH = Heurystyka.Rozwiaz(_listaZadan);
+
+                            wynik = (wynikH.Item1, wynikH.Item2);
+
+                            lblCzas.Text = $"{wynikH.Item3} ticks";
+                            lblOperacje.Text = $"Kroki heurystyki: {wynikH.Item4}";
+                            break;
+                        }
+
 
                     default:
-                        MessageBox.Show("Ten algorytm jeszcze nie obsługuje Gantta");
                         return;
                 }
+
+                
+
+                currentSchedule = wynik.harmonogram;
+                panelGantt.Invalidate();
+
+                lblWynikKoszt.Text = $"Algorytm: {typAlgorytmu}\nKoszt: {wynik.koszt} PLN";
+
 
                 // 🔥 TU „odpalamy” Gantta
                 currentSchedule = wynik.harmonogram;

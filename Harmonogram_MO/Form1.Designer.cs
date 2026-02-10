@@ -47,6 +47,10 @@
             btnAlgorytmDP = new Button();
             panelGantt = new Panel();
             groupBox2 = new GroupBox();
+            lblOperacje = new TextBox();
+            lblCzas = new TextBox();
+            label3 = new Label();
+            label4 = new Label();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)nudKara).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudTermin).BeginInit();
@@ -165,7 +169,7 @@
             // btnWyczysc
             // 
             btnWyczysc.ForeColor = SystemColors.ActiveCaptionText;
-            btnWyczysc.Location = new Point(177, 322);
+            btnWyczysc.Location = new Point(200, 373);
             btnWyczysc.Margin = new Padding(4);
             btnWyczysc.Name = "btnWyczysc";
             btnWyczysc.Size = new Size(118, 64);
@@ -182,7 +186,7 @@
             dgvZadania.Margin = new Padding(4);
             dgvZadania.Name = "dgvZadania";
             dgvZadania.RowHeadersWidth = 51;
-            dgvZadania.Size = new Size(479, 252);
+            dgvZadania.Size = new Size(479, 316);
             dgvZadania.TabIndex = 0;
             // 
             // groupBoxwynik
@@ -257,7 +261,7 @@
             panelGantt.Dock = DockStyle.Fill;
             panelGantt.Location = new Point(3, 27);
             panelGantt.Name = "panelGantt";
-            panelGantt.Size = new Size(927, 377);
+            panelGantt.Size = new Size(690, 377);
             panelGantt.TabIndex = 4;
             panelGantt.Paint += panelGantt_Paint;
             // 
@@ -269,10 +273,48 @@
             groupBox2.ForeColor = SystemColors.ButtonHighlight;
             groupBox2.Location = new Point(14, 493);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(933, 407);
+            groupBox2.Size = new Size(696, 407);
             groupBox2.TabIndex = 5;
             groupBox2.TabStop = false;
             groupBox2.Text = "Wykres Gantta";
+            // 
+            // lblOperacje
+            // 
+            lblOperacje.Location = new Point(739, 573);
+            lblOperacje.Name = "lblOperacje";
+            lblOperacje.Size = new Size(197, 31);
+            lblOperacje.TabIndex = 6;
+            // 
+            // lblCzas
+            // 
+            lblCzas.Location = new Point(740, 665);
+            lblCzas.Name = "lblCzas";
+            lblCzas.Size = new Size(194, 31);
+            lblCzas.TabIndex = 7;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.BackColor = Color.Transparent;
+            label3.Font = new Font("Calibri", 10F, FontStyle.Bold, GraphicsUnit.Point, 238);
+            label3.ForeColor = SystemColors.ButtonFace;
+            label3.Location = new Point(739, 537);
+            label3.Name = "label3";
+            label3.Size = new Size(91, 24);
+            label3.TabIndex = 8;
+            label3.Text = "Operacje:";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.BackColor = Color.Transparent;
+            label4.Font = new Font("Calibri", 10F, FontStyle.Bold, GraphicsUnit.Point, 238);
+            label4.ForeColor = SystemColors.ButtonFace;
+            label4.Location = new Point(739, 626);
+            label4.Name = "label4";
+            label4.Size = new Size(53, 24);
+            label4.TabIndex = 9;
+            label4.Text = "Czas:";
             // 
             // Form1
             // 
@@ -280,6 +322,10 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = (Image)resources.GetObject("$this.BackgroundImage");
             ClientSize = new Size(969, 918);
+            Controls.Add(label4);
+            Controls.Add(label3);
+            Controls.Add(lblCzas);
+            Controls.Add(lblOperacje);
             Controls.Add(groupBox2);
             Controls.Add(groupBoxwynik);
             Controls.Add(groupboxlista);
@@ -299,6 +345,7 @@
             groupBoxwynik.PerformLayout();
             groupBox2.ResumeLayout(false);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -320,5 +367,9 @@
         private Button btnAlgorytmHeurystyka;
         private Panel panelGantt;
         private GroupBox groupBox2;
+        private TextBox lblOperacje;
+        private TextBox lblCzas;
+        private Label label3;
+        private Label label4;
     }
 }
