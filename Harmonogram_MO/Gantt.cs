@@ -11,7 +11,30 @@ namespace Harmonogram_MO
         private const int LeftMargin = 90;   // miejsce na oś Y
         private const int TopMargin = 40;    // miejsce na oś X
 
-        // 🔹 oś czasu (X)
+        // 🔹 OPIS OSI X
+        private void DrawXAxisLabel(Graphics g, int maxTime)
+        {
+            string label = "Czas [h]";
+            SizeF size = g.MeasureString(label, SystemFonts.DefaultFont);
+
+            float x = LeftMargin + (maxTime * Scale) / 2 - size.Width / 2;
+            float y = 5;
+
+            g.DrawString(label, SystemFonts.DefaultFont, Brushes.Black, x, y);
+        }
+        // 🔹 OPIS OSI Y NAD WYKRESEM (NA BIAŁYM TLE)
+        private void DrawYAxisLabelTop(Graphics g)
+        {
+            string label = "Zadania";
+
+            float x = 5;               // lewa krawędź białego obszaru
+            float y = TopMargin - 25;  // NAD pierwszym zadaniem
+
+            g.DrawString(label, SystemFonts.DefaultFont, Brushes.Black, x, y);
+        }
+
+
+                // 🔹 oś czasu (X)
         private void DrawTimeAxis(Graphics g, int maxTime)
         {
             int yAxis = TopMargin - 15;
@@ -47,7 +70,6 @@ namespace Harmonogram_MO
 
             foreach (var task in tasks)
             {
-                // nazwa zadania
                 g.DrawString(
                     task.Name,
                     SystemFonts.DefaultFont,
@@ -56,7 +78,6 @@ namespace Harmonogram_MO
                     y + 5
                 );
 
-                // kreska osi Y
                 g.DrawLine(
                     Pens.LightGray,
                     LeftMargin - 5,
@@ -68,7 +89,6 @@ namespace Harmonogram_MO
                 y += BarHeight + 10;
             }
 
-            // linia osi Y
             g.DrawLine(
                 Pens.Black,
                 LeftMargin,
@@ -89,6 +109,31 @@ namespace Harmonogram_MO
                 return Brushes.SteelBlue;
         }
 
+        // 🔹 LEGENDA
+        private void DrawLegend(Graphics g)
+        {
+            int x = LeftMargin + 300;
+            int y = TopMargin + 10;
+
+            g.DrawString("Legenda:", SystemFonts.DefaultFont, Brushes.Black, x, y);
+            y += 20;
+
+            DrawLegendItem(g, x, y, Brushes.IndianRed, "Wysoka kara");
+            y += 20;
+
+            DrawLegendItem(g, x, y, Brushes.Goldenrod, "Średnia kara");
+            y += 20;
+
+            DrawLegendItem(g, x, y, Brushes.SteelBlue, "Niska kara");
+        }
+
+        private void DrawLegendItem(Graphics g, int x, int y, Brush brush, string text)
+        {
+            g.FillRectangle(brush, x, y, 15, 15);
+            g.DrawRectangle(Pens.Black, x, y, 15, 15);
+            g.DrawString(text, SystemFonts.DefaultFont, Brushes.Black, x + 20, y);
+        }
+
         // 🔹 główna metoda
         public void DrawGantt(Graphics g, List<ScheduledTask> tasks)
         {
@@ -99,6 +144,9 @@ namespace Harmonogram_MO
             DrawTimeAxis(g, maxTime);
             DrawTaskAxis(g, tasks);
 
+            DrawXAxisLabel(g, maxTime);
+            DrawYAxisLabelTop(g);
+
             int y = TopMargin;
 
             foreach (var task in tasks)
@@ -107,31 +155,23 @@ namespace Harmonogram_MO
                 int width = task.Duration * Scale;
 
                 Rectangle rect = new Rectangle(x, y, width, BarHeight);
-
                 Brush brush = GetBrushByPriority(task.Priority);
 
                 g.FillRectangle(brush, rect);
                 g.DrawRectangle(Pens.Black, rect);
 
-                // tekst w środku prostokąta
                 string text = $"{task.Duration}h";
-
                 SizeF textSize = g.MeasureString(text, SystemFonts.DefaultFont);
 
                 float textX = rect.X + (rect.Width - textSize.Width) / 2;
                 float textY = rect.Y + (rect.Height - textSize.Height) / 2;
 
-                g.DrawString(
-                    text,
-                    SystemFonts.DefaultFont,
-                    Brushes.White,
-                    textX,
-                    textY
-                );
-
+                g.DrawString(text, SystemFonts.DefaultFont, Brushes.White, textX, textY);
 
                 y += BarHeight + 10;
             }
+
+            DrawLegend(g);
         }
     }
 }

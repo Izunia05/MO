@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq; // Ważne do obsługi list
-using System.Windows.Forms;
 using Harmonogram_MO;
 
 namespace Harmonogram_MO
@@ -79,6 +78,9 @@ namespace Harmonogram_MO
             nudCzas.Value = 0;
             nudTermin.Value = 0;
             nudKara.Value = 0;
+            lblCzas.Text = "-";
+            lblOperacje.Text = "-";
+
 
 
         }
@@ -101,9 +103,6 @@ namespace Harmonogram_MO
         {
             UruchomObliczenia("HEURYSTYKA");
 
-            var wynik = Heurystyka.Rozwiaz(_listaZadan);
-
-
         }
 
 
@@ -120,6 +119,7 @@ namespace Harmonogram_MO
             lblWynikKoszt.Text = "Obliczam...";
             lblWynikKoszt.ForeColor = Color.Blue;
             Application.DoEvents(); // Odświeża okno, żeby napis się pojawił
+
 
             try
             {
@@ -170,15 +170,10 @@ namespace Harmonogram_MO
                         return;
                 }
 
+
+
                 
-
-                currentSchedule = wynik.harmonogram;
-                panelGantt.Invalidate();
-
-                lblWynikKoszt.Text = $"Algorytm: {typAlgorytmu}\nKoszt: {wynik.koszt} PLN";
-
-
-                // 🔥 TU „odpalamy” Gantta
+                 //  TU „odpalamy” Gantta
                 currentSchedule = wynik.harmonogram;
                 panelGantt.Invalidate();
 
@@ -189,8 +184,6 @@ namespace Harmonogram_MO
                 if (wynik.koszt == 0) lblWynikKoszt.ForeColor = Color.Green;
                 else lblWynikKoszt.ForeColor = Color.Red;
 
-                currentSchedule = wynik.harmonogram;
-                panelGantt.Invalidate();
 
 
             }
